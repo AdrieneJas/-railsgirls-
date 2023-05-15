@@ -1,18 +1,25 @@
 class IdeasController < ApplicationController
   before_action :set_idea, only: %i[ show edit update destroy ]
-
+  before_action :set_idea, only: [:show, :edit, :update, :destroy]
   # GET /ideas or /ideas.json
   def index
     @ideas = Idea.all
   end
 
+  private
+  def set_idea
+    @idea = Idea.find(params[:id])
+  end
   # GET /ideas/1 or /ideas/1.json
   def show
+    @idea = Idea.find(params[:id])
+    @comment = @idea.comments.build
   end
 
   # GET /ideas/new
   def new
     @idea = Idea.new
+    render :new
   end
 
   # GET /ideas/1/edit
